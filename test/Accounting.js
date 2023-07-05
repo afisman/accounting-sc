@@ -32,26 +32,18 @@ describe("Accounting", function () {
 
   });
 
-  describe("Withdrawals", function () {
-    describe("Validations", function () {
-      it("Should revert with the right error if called too soon", async function () {
-        const { lock } = await loadFixture(deployOneYearLockFixture);
+  describe("Transactions", function () {
+    describe("Withdrawals", function () {
 
-        await expect(lock.withdraw()).to.be.revertedWith(
-          "You can't withdraw yet"
-        );
-      });
 
       it("Should revert with the right error if called from another account", async function () {
-        const { lock, unlockTime, otherAccount } = await loadFixture(
+        const { accounting, otherAccount } = await loadFixture(
           deployOneYearLockFixture
         );
 
-        // We can increase the time in Hardhat Network
-        await time.increaseTo(unlockTime);
 
         // We use lock.connect() to send a transaction from another account
-        await expect(lock.connect(otherAccount).withdraw()).to.be.revertedWith(
+        await expect(accounting.connect(otherAccount).withdraw(1000000)).to.be.revertedWith(
           "You aren't the owner"
         );
       });
