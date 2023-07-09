@@ -24,7 +24,7 @@ describe("Accounting", function () {
   describe("Deployment", function () {
 
     it("Should set the right owner", async function () {
-      const { accounting, owner } = await loadFixture(deployOneYearLockFixture);
+      const { accounting, owner } = await loadFixture(deployAccounting);
 
       expect(await accounting.owner()).to.equal(owner.address);
     });
@@ -38,7 +38,7 @@ describe("Accounting", function () {
 
       it("Should revert with the right error if called from another account", async function () {
         const { accounting, otherAccount } = await loadFixture(
-          deployOneYearLockFixture
+          deployAccounting
         );
 
 
